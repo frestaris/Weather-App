@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <form method="POST" action="/">
+        <div class="search">
+          <input
+            type="text"
+            name="city"
+            placeholder="Enter city name"
+            spellcheck="false"
+          />
+          <button type="submit"><img src="images/search.png" /></button>
+        </div>
+      </form>
+      <div class="error">
+        <% if (error) { %>
+        <p>Invalid city name</p>
+        <% } %>
+      </div>
+      <div class="weather">
+        <img src="<%= weatherIcon %>" class="weather-icon" />
+        <% if (temp !== "" && city !== "" && humidity !== "" && wind !== "") {
+        %>
+        <h1 class="temp"><%= Math.round(temp) %>°c</h1>
+        <h2 class="city"><%= city %></h2>
+        <div class="details">
+          <div class="col">
+            <img src="/images/humidity.png" alt="" />
+            <div>
+              <p class="humidity"><%= humidity %>%</p>
+              <p>Humidity</p>
+            </div>
+          </div>
+          <div class="col">
+            <img src="images/wind.png" alt="" />
+            <div>
+              <p class="wind"><%= wind %> km/h</p>
+              <p>Wind Speed</p>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>
