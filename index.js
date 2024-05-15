@@ -1,16 +1,16 @@
 import express from "express";
 import axios from "axios";
+import "dotenv/config";
 
 const app = express();
 const port = 3000;
 
-const apiKey = "";
+const apiKey = process.env.API_KEY;
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather";
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-// Render the initial form
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     temp: "",
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
     wind: "",
     weatherIcon: "",
     error: false,
-  }); // Initial values are empty
+  });
 });
 
 // Handle form submission
@@ -57,7 +57,7 @@ app.post("/", (req, res) => {
           weatherIcon = "images/fog.png";
           break;
         default:
-          weatherIcon = "images/default.png"; // Default icon
+          weatherIcon = "images/default.png";
       }
 
       // Render the index.ejs template with the fetched data and weather icon
@@ -66,19 +66,19 @@ app.post("/", (req, res) => {
         city: name,
         humidity,
         wind: wind.speed,
-        weatherIcon, // Pass weatherIcon to index.ejs
+        weatherIcon,
         error: false,
       });
     })
     .catch((error) => {
       console.error("Error fetching weather data:", error);
-      // Handle error
+
       res.render("index.ejs", {
         temp: "",
         city: "",
         humidity: "",
         wind: "",
-        weatherIcon: "images/default.png", // Default icon for error case
+        weatherIcon: "images/default.png",
         error: true,
       });
     });
